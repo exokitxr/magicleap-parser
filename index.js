@@ -146,6 +146,64 @@ const _getJsType = type => {
     case 'const MLMediaDRMByteArray':
     case 'MLMediaDataSourceReadAt':
     case 'MLMediaDataSourceGetSize':
+    case 'MLMediaDataSourceClose':
+    case 'MLMediaDRMByteArray':
+    case 'MLMediaDRMKeyValueArray':
+    case 'MLMediaDRMByteArrayList':
+    case 'MLMediaDRMRequestMessage':
+    case 'const MLMediaDRMKeyValue':
+    case 'MLMediaDRMEventListener':
+    case 'MLMediaDRMErrorCode':
+    case 'const MLMediaDRMKeyRequestInputParam':
+    case 'MLMediaDRMProperty':
+    case 'const MLMediaDRMCryptoInputParam':
+    case 'const MLMediaDRMHMACInputParam':
+    case 'const MLMediaDRMRSAInputParam':
+    case 'MLMediaExtractorDRMSchemeInitData':
+    case 'MLMediaExtractorSeekPostion':
+    case 'MLMediaExtractorPSSHEntry':
+    case 'MLMediaFormatKey':
+    case 'MLMediaPlayerTrackType':
+    case 'MLMediaPlayerOnFrameAvailableCallback':
+    case 'MLMediaPlayerEventCallbacks':
+    case 'MLMediaPlayerVideoScalingMode':
+    case 'MLMediaStreamSourceOnBufferAvailable':
+    case 'const MLMeshingSettings':
+    case 'MLMeshingStaticData':
+    case 'MLMusicServiceCallbacks':
+    case 'MLMusicServiceShuffleState':
+    case 'MLMusicServiceRepeatState':
+    case 'MLMusicServiceStatus':
+    case 'MLMusicServiceError':
+    case 'MLMusicServicePlaybackState':
+    case 'MLMusicServiceRepeatState':
+    case 'MLMusicServiceShuffleState':
+    case 'MLMusicServiceMetadata':
+    case 'const MLOcclusionDepthBufferInfo':
+    case 'MLPerceptionSettings':
+    case 'MLSnapshot':
+    case 'const MLPlanesQuery':
+    case 'MLPlane':
+    case 'MLPrivilegeID':
+    case 'const MLRaycastQuery':
+    case 'MLRaycastResult':
+    case 'MLImage':
+    case 'MLScreensWatchHistoryList':
+    case 'MLScreensScreenInfoList':
+    case 'MLScreensWatchHistoryEntry':
+    case 'const MLImage':
+    case 'const MLScreensWatchHistoryEntry':
+    case 'const MLImage':
+    case 'MLScreensWatchHistoryList':
+    case 'MLImage':
+    case 'MLScreensScreenInfoList':
+    case 'const MLSharedFileList':
+    case 'MLSharedFileErrorCode':
+    case 'const MLSnapshot':
+    case 'const MLCoordinateFrameUID':
+    case 'MLTransform':
+    case 'const MLTokenAgentClientCredentials':
+    case 'onFilesPickedCb':
       return 'Number';
     case 'const char':
       return 'String';
