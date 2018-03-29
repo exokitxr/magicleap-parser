@@ -30,6 +30,122 @@ const _getJsType = type => {
     case 'MLPlanesQueryResult':
     case 'MLSharedFileList':
     case 'MLTokenAgentError':
+    case 'const MLAudioBufferFormat':
+    case 'MLAudioError':
+    case 'MLAudioBufferCallback':
+    case 'MLAudioBufferFormat':
+    case 'MLAudioBuffer':
+    case 'MLCameraCaptureType':
+    case 'MLCameraDeviceStatusCallbacks':
+    case 'MLCameraCaptureCallbacks':
+    case 'MLCameraError':
+    case 'MLCameraOutput':
+    case 'MLCameraResultExtras':
+    case 'MLCameraMetadataColorCorrectionAberrationMode':
+    case 'size_t':
+    case 'MLCameraMetadataControlAEMode':
+    case 'int32_t':
+    case 'MLCameraMetadataRational':
+    case 'MLCameraMetadataControlAELockAvailable':
+    case 'MLCameraMetadataControlAWBMode':
+    case 'MLCameraMetadataControlAWBLockAvailable':
+    case 'float':
+    case 'int64_t':
+    case 'const int64_t':
+    case 'MLCameraMetadataColorCorrectionMode':
+    case 'MLCameraMetadataControlAEAntibandingMode':
+    case 'MLCameraMetadataControlAELock':
+    case 'MLCameraMetadataControlAWBLock':
+    case 'const MLCameraMetadataColorCorrectionMode':
+    case 'const MLCameraMetadataRational':
+    case 'const float':
+    case 'const MLCameraMetadataColorCorrectionAberrationMode':
+    case 'const MLCameraMetadataControlAEAntibandingMode':
+    case 'const int32_t':
+    case 'const MLCameraMetadataControlAELock':
+    case 'const MLCameraMetadataControlAEMode':
+    case 'const MLCameraMetadataControlAWBLock':
+    case 'const MLCameraMetadataControlAWBMode':
+    case 'MLCameraMetadataControlAEState':
+    case 'MLCameraMetadataControlAWBState':
+    case 'MLControllerConfiguration':
+    case 'MLControllerSystemState':
+    case 'MLDataArrayDiff':
+    case 'MLDataArrayHandle':
+    case 'MLDataArray':
+    case 'MLDispatchPacket':
+    case 'const MLDispatchPacket':
+    case 'MLEyeTrackingStaticData':
+    case 'MLEyeTrackingState':
+    case 'int':
+    case 'const MLFoundObjectQueryFilter':
+    case 'MLFoundObject':
+    case 'MLUUID':
+    case 'char':
+    case 'MLFoundObjectProperty':
+    case 'MLGestureData':
+    case 'MLGestureStaticData':
+    case 'MLGestureHandMasks':
+    case 'const MLGestureConfiguration':
+    case 'MLGestureConfiguration':
+    case 'const MLGraphicsOptions':
+    case 'const MLHandle':
+    case 'MLStatus':
+    case 'const MLSurfaceFormat':
+    case 'const uint32_t':
+    case 'const VkPhysicalDevice':
+    case 'const VkDevice':
+    case 'const VkFormat':
+    case 'MLGraphicsFrameTimingHint':
+    case 'MLGraphicsFrameParams':
+    case 'const MLGraphicsFrameParams':
+    case 'MLGraphicsVirtualCameraInfoArray':
+    case 'MLGraphicsClipExtentsInfoArray':
+    case 'MLGraphicsRenderTargetsInfo':
+    case 'MLGraphicsClientPerformanceInfo':
+    case 'MLHeadTrackingStaticData':
+    case 'MLHeadTrackingState':
+    case 'MLIdentityProfile':
+    case 'const MLIdentityAttributeEnum':
+    case 'const MLImageTrackerSettings':
+    case 'MLImageTrackerSettings':
+    case 'const MLImageTrackerTargetSettings':
+    case 'const unsigned':
+    case 'MLImageTrackerImageFormat':
+    case 'MLImageTrackerTargetStaticData':
+    case 'MLImageTrackerSettings':
+    case 'MLImageTrackerTargetResult':
+    case 'const MLInputConfiguration':
+    case 'const MLInputControllerCallbacks':
+    case 'MLInputControllerState':
+    case 'uint8_t':
+    case 'MLInputControllerFeedbackPatternVibe':
+    case 'MLInputControllerFeedbackIntensity':
+    case 'MLInputControllerFeedbackPatternLED':
+    case 'MLInputControllerFeedbackColorLED':
+    case 'MLInputControllerFeedbackEffectLED':
+    case 'MLInputControllerFeedbackEffectSpeedLED':
+    case 'const MLInputKeyboardCallbacks':
+    case 'MLInputKeyboardState':
+    case 'const MLLifecycleCallbacks':
+    case 'MLLifecycleSelfInfo':
+    case 'const MLLifecycleInitArgList':
+    case 'MLLifecycleInitArgList':
+    case 'MLLightingTrackingAmbientGlobalState':
+    case 'MLLightingTrackingAmbientGridState':
+    case 'MLLightingTrackingColorTemperatureState':
+    case 'MLLogLevel':
+    case 'MLMediaCodecCreation':
+    case 'MLMediaCodecType':
+    case 'MLMediaCodecCallbacks':
+    case 'const uint8_t':
+    case 'MLMediaCodecBufferInfo':
+    case 'MLMediaCodecListCodecTypeFlag':
+    case 'MLMediaCodecListQueryResults':
+    case 'MLMediaCodecListCapabilityFlag':
+    case 'const MLMediaDRMByteArray':
+    case 'MLMediaDataSourceReadAt':
+    case 'MLMediaDataSourceGetSize':
       return 'Number';
     case 'const char':
       return 'String';
@@ -38,12 +154,13 @@ const _getJsType = type => {
   }
 };
 const _parseArgs = args => args.map(arg => {
-  const match = arg.match(/^((?:const )?\S+(?: \*)?)(.+)/);
+  const match = arg.match(/^((?:const )?\S+(?:\s+\*+)?)\s+(.+)/);
   if (!match) {
     throw new Error('fail: ' + arg);
   }
   const type = _cleanType(match[1]);
   const name = match[2];
+  // console.log('name', {type, name});
   return {
     type,
     name,
@@ -63,21 +180,26 @@ if (dir && fs.lstatSync(dir).isDirectory(dir)) {
       for (let j = 0; j < lines.length; j++) {
         const line = lines[j];
         if (!/\.\.\./.test(line)) {
-          const match = line.match(/ML_API\s+((?:const )?\S+(?: \*)?)\s+(.+)\((.+)\)/);
+          const match = line.match(/ML_API\s+((?:const )?\S+(?: \*+)?)\s+(.+?)\((.+)\);\s*$/);
           if (match) {
-            const argStrings = match[3].split(/,\s+/);
-            const type = _cleanType(match[1]);
-            const name = _cleanName(match[2]);
-            const args = _parseArgs(argStrings);
-            if (/\(/.test(type) || /ML_CALL/.test(type) || /ML_CALL/.test(name)) {
-              console.warn({line, type, name});
-              throw new Error('failed to gen');
+            try {
+              const argStrings = match[3].split(/,\s+/);
+              const type = _cleanType(match[1]);
+              const name = _cleanName(match[2]);
+              // console.log('parse type name args', {type, name, argStrings});
+              const args = _parseArgs(argStrings);
+              if (/\(/.test(type) || /ML_CALL/.test(type) || /ML_CALL/.test(name)) {
+                console.warn({line, type, name});
+                throw new Error('failed to gen');
+              }
+              fns.push({
+                type,
+                name,
+                args,
+              });
+            } catch(err) {
+              console.warn(line, err.stack);
             }
-            fns.push({
-              type,
-              name,
-              args,
-            });
           }
         }
       }
@@ -91,6 +213,8 @@ if (dir && fs.lstatSync(dir).isDirectory(dir)) {
     const {type, name, args} = fn;
     result += 'NAN_METHOD(' + name + ') {\n';
     for (let j = 0; j < args.length; j++) {
+      const arg = args[j];
+      const {type, name} = arg;
       const jsType = _getJsType(type);
       result += `  const ${type} ${name} = Nan::New<${jsType}>(info[${j}]);\n`;
     }
